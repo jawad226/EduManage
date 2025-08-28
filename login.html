@@ -1,0 +1,651 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Student Portal - Login & Register</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+
+    body {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      background: linear-gradient(135deg, #4361ee, #2575fc);
+      padding: 20px;
+    }
+
+    .container {
+      display: flex;
+      width: 900px;
+      max-width: 100%;
+      min-height: 560px;
+      border-radius: 20px;
+      box-shadow: 0 15px 35px rgba(0, 0, 0, 0.3);
+      overflow: hidden;
+      background: white;
+    }
+
+    .left-panel {
+      flex: 1;
+      background: linear-gradient(135deg, #4361ee, #2575fc);
+      color: white;
+      padding: 40px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .left-panel::before {
+      content: '';
+      position: absolute;
+      top: -50px;
+      left: -50px;
+      width: 150px;
+      height: 150px;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.1);
+    }
+
+    .left-panel::after {
+      content: '';
+      position: absolute;
+      bottom: -50px;
+      right: -50px;
+      width: 150px;
+      height: 150px;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.1);
+    }
+
+    .right-panel {
+      flex: 1.5;
+      padding: 40px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+
+    .logo {
+      margin-bottom: 30px;
+      position: relative;
+      z-index: 1;
+    }
+
+    .logo i {
+      font-size: 42px;
+      color: white;
+      margin-bottom: 15px;
+    }
+
+    .logo h1 {
+      font-weight: 700;
+      font-size: 28px;
+    }
+
+    .welcome-text h2 {
+      font-size: 32px;
+      margin-bottom: 20px;
+      font-weight: 700;
+      position: relative;
+      z-index: 1;
+    }
+
+    .welcome-text p {
+      font-size: 18px;
+      margin-bottom: 30px;
+      line-height: 1.6;
+      position: relative;
+      z-index: 1;
+    }
+
+    .toggle-btn {
+      padding: 14px 35px;
+      background: transparent;
+      color: white;
+      border: 2px solid white;
+      border-radius: 50px;
+      font-size: 16px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      position: relative;
+      z-index: 1;
+    }
+
+    .toggle-btn:hover {
+      background: white;
+      color: #2575fc;
+      transform: translateY(-3px);
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+    }
+
+    .form-container {
+      width: 100%;
+    }
+
+    .form-container h2 {
+      color: #333;
+      font-size: 28px;
+      margin-bottom: 30px;
+      font-weight: 600;
+      text-align: center;
+    }
+
+    .form-group {
+      position: relative;
+      margin-bottom: 25px;
+    }
+
+    .form-group input {
+      width: 100%;
+      padding: 16px 45px 16px 45px;
+      border: 1px solid #ddd;
+      border-radius: 8px;
+      outline: none;
+      font-size: 16px;
+      color: #333;
+      transition: all 0.3s;
+    }
+
+    .form-group input:focus {
+      border-color: #4361ee;
+      box-shadow: 0 0 12px rgba(67, 97, 238, 0.2);
+    }
+
+    .form-group i.input-icon {
+      position: absolute;
+      left: 15px;
+      top: 16px;
+      color: #777;
+      font-size: 18px;
+    }
+
+    .form-group i.toggle-password {
+      position: absolute;
+      right: 15px;
+      top: 16px;
+      color: #777;
+      font-size: 18px;
+      cursor: pointer;
+      transition: color 0.3s;
+    }
+
+    .form-group i.toggle-password:hover {
+      color: #4361ee;
+    }
+
+    .btn {
+      width: 100%;
+      padding: 16px;
+      border: none;
+      border-radius: 8px;
+      background: linear-gradient(135deg, #4361ee, #2575fc);
+      color: white;
+      font-size: 16px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s;
+      box-shadow: 0 4px 15px rgba(67, 97, 238, 0.3);
+    }
+
+    .btn:hover {
+      background: linear-gradient(135deg, #2575fc, #4361ee);
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px rgba(67, 97, 238, 0.4);
+    }
+
+    .form-footer {
+      text-align: center;
+      margin-top: 25px;
+      color: #777;
+    }
+
+    .form-footer a {
+      color: #4361ee;
+      text-decoration: none;
+      font-weight: 600;
+      transition: all 0.3s;
+    }
+
+    .form-footer a:hover {
+      text-decoration: underline;
+      color: #2575fc;
+    }
+
+    /* Remember me checkbox */
+    .remember-forgot {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 25px;
+      font-size: 14px;
+    }
+
+    .remember {
+      display: flex;
+      align-items: center;
+    }
+
+    .remember input {
+      margin-right: 8px;
+      accent-color: #4361ee;
+    }
+
+    .forgot-password {
+      color: #4361ee;
+      text-decoration: none;
+    }
+
+    .forgot-password:hover {
+      text-decoration: underline;
+      color: #2575fc;
+    }
+
+    /* Divider */
+    .divider {
+      display: flex;
+      align-items: center;
+      margin: 25px 0;
+    }
+
+    .divider span {
+      flex: 1;
+      height: 1px;
+      background: #ddd;
+    }
+
+    .divider p {
+      padding: 0 15px;
+      color: #777;
+      font-size: 14px;
+    }
+
+    /* Social login */
+    .social-login {
+      display: flex;
+      justify-content: center;
+      gap: 15px;
+    }
+
+    .social-btn {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      width: 50px;
+      height: 50px;
+      border-radius: 50%;
+      background: #f5f5f5;
+      color: #444;
+      text-decoration: none;
+      transition: all 0.3s;
+    }
+
+    .social-btn:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+    }
+
+    .social-btn.google:hover {
+      background: #db4a39;
+      color: white;
+    }
+
+    .social-btn.fb:hover {
+      background: #3b5998;
+      color: white;
+    }
+
+    .social-btn.twitter:hover {
+      background: #1da1f2;
+      color: white;
+    }
+
+    /* Hide Register Form Initially */
+    #registerForm {
+      display: none;
+    }
+
+    /* Animation for form switching */
+    .form-container form {
+      transition: opacity 0.3s ease;
+    }
+
+    /* Success message */
+    .success-message {
+      display: none;
+      text-align: center;
+      color: #4caf50;
+      margin-top: 15px;
+      font-weight: 500;
+    }
+
+    /* Error message */
+    .error-message {
+      display: none;
+      text-align: center;
+      color: #f44336;
+      margin-top: 15px;
+      font-weight: 500;
+    }
+
+    /* Loading animation */
+    .btn.loading {
+      position: relative;
+      color: transparent;
+    }
+
+    .btn.loading::after {
+      content: '';
+      position: absolute;
+      width: 20px;
+      height: 20px;
+      top: 50%;
+      left: 50%;
+      margin: -10px 0 0 -10px;
+      border: 3px solid rgba(255, 255, 255, 0.3);
+      border-radius: 50%;
+      border-top-color: white;
+      animation: spin 0.8s ease infinite;
+    }
+
+    @keyframes spin {
+      to {
+        transform: rotate(360deg);
+      }
+    }
+
+    @media (max-width: 768px) {
+      .container {
+        flex-direction: column;
+        width: 100%;
+      }
+
+      .left-panel {
+        border-right: none;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.18);
+        padding: 30px;
+      }
+
+      .right-panel {
+        padding: 30px;
+      }
+
+      .remember-forgot {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 10px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <div class="container">
+    <div class="left-panel">
+      <div class="logo">
+        <i class="fas fa-graduation-cap"></i>
+        <h1>Student Portal</h1>
+      </div>
+      <div class="welcome-text">
+        <h2 id="panelTitle">Hello, Friend!</h2>
+        <p id="panelDesc">Enter your personal details and start your journey with us.</p>
+      </div>
+      <button class="toggle-btn" id="toggleBtn">Sign Up</button>
+    </div>
+
+    <div class="right-panel">
+      <div class="form-container">
+        <!-- Login Form -->
+        <form id="loginForm">
+          <h2>Sign in to Account</h2>
+          <div class="form-group">
+            <i class="fas fa-user input-icon"></i>
+            <input type="text" id="loginEmail" placeholder="Username or Email" required>
+          </div>
+          <div class="form-group">
+            <i class="fas fa-lock input-icon"></i>
+            <i class="fas fa-eye-slash toggle-password" id="loginTogglePassword"></i>
+            <input type="password" placeholder="Password" id="loginPassword" required>
+          </div>
+          <div class="remember-forgot">
+            <div class="remember">
+              <input type="checkbox" id="remember">
+              <label for="remember">Remember me</label>
+            </div>
+            <a href="#" class="forgot-password">Forgot Password?</a>
+          </div>
+          <button type="submit" class="btn">Sign In</button>
+
+          <div class="error-message" id="loginError">
+            <i class="fas fa-exclamation-circle"></i> <span id="loginErrorText"></span>
+          </div>
+
+          <div class="divider">
+            <span></span>
+            <p>or continue with</p>
+            <span></span>
+          </div>
+
+          <div class="social-login">
+            <a href="#" class="social-btn google"><i class="fab fa-google"></i></a>
+            <a href="#" class="social-btn fb"><i class="fab fa-facebook-f"></i></a>
+            <a href="#" class="social-btn twitter"><i class="fab fa-twitter"></i></a>
+          </div>
+
+          <div class="form-footer">
+            <p>Don't have an account? <a href="#" id="toRegister">Sign Up</a></p>
+          </div>
+        </form>
+
+        <!-- Register Form -->
+        <form id="registerForm">
+          <h2>Create Account</h2>
+          <div class="form-group">
+            <i class="fas fa-user input-icon"></i>
+            <input type="text" id="registerName" placeholder="Name" required>
+          </div>
+          <div class="form-group">
+            <i class="fas fa-envelope input-icon"></i>
+            <input type="email" id="registerEmail" placeholder="Email" required>
+          </div>
+          <div class="form-group">
+            <i class="fas fa-lock input-icon"></i>
+            <i class="fas fa-eye-slash toggle-password" id="registerTogglePassword"></i>
+            <input type="password" placeholder="Password" id="registerPassword" required>
+          </div>
+          <button type="submit" class="btn">Register</button>
+
+          <div class="error-message" id="registerError">
+            <i class="fas fa-exclamation-circle"></i> <span id="registerErrorText"></span>
+          </div>
+
+          <div class="success-message" id="registerSuccess">
+            <i class="fas fa-check-circle"></i> Registration successful! You can now login.
+          </div>
+
+          <div class="form-footer">
+            <p>Already have an account? <a href="#" id="toLogin">Sign In</a></p>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // API URLs (update with your backend)
+    const API_BASE = "http://localhost:3000";
+    const LOGIN_API = `${API_BASE}/auth/login`;
+    const REGISTER_API = `${API_BASE}/auth/register`;
+
+    const loginForm = document.getElementById("loginForm");
+    const registerForm = document.getElementById("registerForm");
+    const toggleBtn = document.getElementById("toggleBtn");
+    const panelTitle = document.getElementById("panelTitle");
+    const panelDesc = document.getElementById("panelDesc");
+    const toRegister = document.getElementById("toRegister");
+    const toLogin = document.getElementById("toLogin");
+    const loginTogglePassword = document.getElementById("loginTogglePassword");
+    const registerTogglePassword = document.getElementById("registerTogglePassword");
+    const loginPassword = document.getElementById("loginPassword");
+    const registerPassword = document.getElementById("registerPassword");
+    const registerSuccess = document.getElementById("registerSuccess");
+    const loginError = document.getElementById("loginError");
+    const registerError = document.getElementById("registerError");
+    const loginErrorText = document.getElementById("loginErrorText");
+    const registerErrorText = document.getElementById("registerErrorText");
+
+    // Toggle password
+    function setupPasswordToggle(toggleElement, passwordField) {
+      toggleElement.addEventListener('click', function () {
+        const type = passwordField.getAttribute('type') === 'password' ? 'text' : 'password';
+        passwordField.setAttribute('type', type);
+        this.classList.toggle('fa-eye');
+        this.classList.toggle('fa-eye-slash');
+      });
+    }
+    setupPasswordToggle(loginTogglePassword, loginPassword);
+    setupPasswordToggle(registerTogglePassword, registerPassword);
+
+    function showRegister() {
+      loginForm.style.display = "none";
+      registerForm.style.display = "block";
+      toggleBtn.textContent = "Sign In";
+      panelTitle.textContent = "Welcome Back!";
+      panelDesc.textContent = "To keep connected with us please login with your personal info.";
+      // Clear errors when switching forms
+      loginError.style.display = "none";
+      registerError.style.display = "none";
+    }
+
+    function showLogin() {
+      registerForm.style.display = "none";
+      loginForm.style.display = "block";
+      toggleBtn.textContent = "Sign Up";
+      panelTitle.textContent = "Hello, Friend!";
+      panelDesc.textContent = "Enter your personal details and start your journey with us.";
+      // Clear errors when switching forms
+      loginError.style.display = "none";
+      registerError.style.display = "none";
+    }
+
+    toggleBtn.addEventListener("click", () => {
+      if (loginForm.style.display === "block" || loginForm.style.display === "") {
+        showRegister();
+      } else {
+        showLogin();
+      }
+    });
+
+    toRegister.addEventListener("click", (e) => {
+      e.preventDefault();
+      showRegister();
+    });
+
+    toLogin.addEventListener("click", (e) => {
+      e.preventDefault();
+      showLogin();
+    });
+
+    // Function to show error message
+    function showError(errorElement, errorTextElement, message) {
+      errorTextElement.textContent = message;
+      errorElement.style.display = "block";
+      // Hide after 5 seconds
+      setTimeout(() => {
+        errorElement.style.display = "none";
+      }, 5000);
+    }
+
+    // -------------------- LOGIN --------------------
+    loginForm.addEventListener("submit", async (e) => {
+      e.preventDefault();
+      const btn = loginForm.querySelector('.btn');
+      btn.classList.add('loading');
+
+      // Hide any previous errors
+      loginError.style.display = "none";
+
+      const email = document.getElementById("loginEmail").value;
+      const password = document.getElementById("loginPassword").value;
+
+      try {
+        const res = await fetch(LOGIN_API, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ email, password })
+        });
+
+        const data = await res.json();
+
+        if (!res.ok) {
+          throw new Error(data.message || "Invalid login credentials");
+        }
+
+        localStorage.setItem("token", data.access_token);
+
+        btn.classList.remove('loading');
+        alert("Login successful! Redirecting...");
+        window.location.href = "/dashboard.html"; // Change to your dashboard page
+      } catch (err) {
+        btn.classList.remove('loading');
+        showError(loginError, loginErrorText, err.message);
+      }
+    });
+
+    // -------------------- REGISTER --------------------
+    registerForm.addEventListener("submit", async (e) => {
+      e.preventDefault();
+      const btn = registerForm.querySelector('.btn');
+      btn.classList.add('loading');
+
+      // Hide any previous errors and success message
+      registerError.style.display = "none";
+      registerSuccess.style.display = "none";
+
+      const name = document.getElementById("registerName").value;
+      const email = document.getElementById("registerEmail").value;
+      const password = document.getElementById("registerPassword").value;
+
+      try {
+        const res = await fetch(REGISTER_API, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ name, email, password })
+        });
+
+        const data = await res.json();
+
+        if (!res.ok) {
+          throw new Error(data.message || "Registration failed");
+        }
+
+        btn.classList.remove('loading');
+        registerSuccess.style.display = "block";
+
+        setTimeout(() => {
+          showLogin();
+          registerSuccess.style.display = "none";
+          registerForm.reset();
+        }, 2000);
+      } catch (err) {
+        btn.classList.remove('loading');
+        showError(registerError, registerErrorText, err.message);
+      }
+    });
+  </script>
+</body>
+
+</html>
