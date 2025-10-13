@@ -1,7 +1,10 @@
 // API Endpoints
-const STUDENT_API = "http://localhost:3000/student";
-const ATTENDANCE_API = "http://localhost:3000/attendance";
-const MARKS_API = "http://localhost:3000/marks";
+const BASE_URL = "https://edumanagebackend-production.up.railway.app";
+
+const STUDENT_API = `${BASE_URL}/student`;
+const ATTENDANCE_API = `${BASE_URL}/attendance`;
+const MARKS_API = `${BASE_URL}/marks`;
+
 
 // DOM Elements
 const navItems = document.querySelectorAll('.nav-menu li');
