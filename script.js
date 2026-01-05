@@ -1,5 +1,5 @@
 // API Endpoints
-const BASE_URL = "https://edumanagebackend-production.up.railway.app";
+const BASE_URL = "http://localhost:3000";
 
 const STUDENT_API = `${BASE_URL}/student`;
 const ATTENDANCE_API = `${BASE_URL}/attendance`;
