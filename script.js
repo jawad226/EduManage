@@ -1,5 +1,5 @@
 // API Endpoints
-const BASE_URL = "http://localhost:3000";
+const BASE_URL = "https://edumanagebackend.onrender.com";
 
 const STUDENT_API = `${BASE_URL}/student`;
 const ATTENDANCE_API = `${BASE_URL}/attendance`;
@@ -712,10 +712,10 @@ loginForm.addEventListener("submit", async (e) => {
     const password = loginForm.querySelector("input[type='password']").value;
 
     try {
-        const response = await fetch("https://edumanagebackend-production.up.railway.app/auth/login", {
+        const response = await fetch(`${BASE_URL}/auth/login`, {
             method: "POST",
             headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({ username, password })
+            body: JSON.stringify({ email: username, password }) // email is used in backend
         });
 
         if (!response.ok) throw new Error("Login failed");
@@ -723,7 +723,7 @@ loginForm.addEventListener("submit", async (e) => {
         const data = await response.json();
 
         // Save token (localStorage/sessionStorage)
-        localStorage.setItem("token", data.token);
+        localStorage.setItem("token", data.access_token);
 
         // Redirect
         window.location.href = "dashboard.html";
